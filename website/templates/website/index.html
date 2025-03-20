@@ -1,0 +1,55 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analyser avec Gemini 2.0</title>
+    <link rel="stylesheet" href={% static 'css/styles.css' %}>
+</head>
+<body>
+    
+    <main>
+        <div class="form-container">
+            <div class="google-colors">
+                <div class="color-block blue"></div>
+                <div class="color-block red"></div>
+                <div class="color-block yellow"></div>
+                <div class="color-block green"></div>
+            </div>
+            
+            <div class="form-header">
+                <h2>Télécharger un fichier</h2>
+                <p>Sélectionnez un fichier à partir de votre appareil</p>
+            </div>
+            
+            <form id="upload-form" action="#" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="file-upload">Fichier à analyser</label>
+                    <div class="file-input-container" id="file-drop-area">
+                        <div class="file-input-icon">
+                            &#x1F4C1;
+                        </div>
+                        <div class="file-input-text">
+                            <p>Cliquez pour parcourir vos fichiers</p>
+                            <p>ou déposez le fichier ici</p>
+                            <p id="file-name">Aucun fichier sélectionné</p>
+                        </div>
+                        <input type="file" id="file-upload" name="file-upload" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="submit-btn">Analyser</button>
+            </form>
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Workshop GDG Yaoundé. Tous droits réservés.</p>
+    </footer>
+    
+    <script src={% static 'js/script.js' %}></script>
+</body>
+</html>

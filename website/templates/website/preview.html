@@ -1,0 +1,86 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Description du fichier</title>
+    <link rel="stylesheet" href={% static 'css/preview-styles.css' %}>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href={% url "index" %}>Analyser fichier</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <main>
+        <div class="preview-container">
+            <div class="google-colors">
+                <div class="color-block blue"></div>
+                <div class="color-block red"></div>
+                <div class="color-block yellow"></div>
+                <div class="color-block green"></div>
+            </div>
+            
+            <div class="preview-header">
+                <h2>Aperçu du fichier</h2>
+                <p id="file-info">Nom du fichier: <span id="filename">{{ file.name|default:"Aucun fichier"}}</span></p>
+            </div>
+            
+            <div class="preview-content">
+                <div class="media-preview" id="media-preview">
+                    {% if file %}
+                        {% if file.type == "image" %}
+                            <img src="{{ file.get_url }}" alt="Aperçu de l'image">
+                        {% elif file.type == "audio" %}
+                            <audio controls>
+                                <source src="{{ file.get_url }}" type="audio/mpeg">
+                                Votre navigateur ne supporte pas l'élément audio.
+                            </audio>
+                        {% elif file.type == "video" %}
+                            <video controls>
+                                <source src="{{ file.get_url }}" type="video/mp4">
+                                Votre navigateur ne supporte pas l'élément vidéo.
+                            </video>
+                        {% endif %}
+
+                    {% else %}
+                        <!-- Le contenu sera inséré dynamiquement en fonction du type de fichier -->
+                        <div class="placeholder">
+                            <div class="file-icon">&#x1F4C4;</div>
+                            <p>Sélectionnez un fichier pour l'aperçu</p>
+                        </div>
+                    
+                    {% endif %}
+                </div>
+                
+                <div class="controls-container" id="media-controls">
+                    <!-- Les contrôles seront ajoutés dynamiquement pour audio/vidéo -->
+                </div>
+                
+                <div class="description-container">
+                    <h3>Description</h3>
+                    <div id="file-description-display">
+                        {% if file.description %}
+                            {{ file.description|safe }}
+                        {% else %}
+                            <p>Aucune description disponible pour ce fichier.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+    
+    <footer>
+        <p>&copy; 2025 Workshop GDG Yaoundé. Tous droits réservés.</p>
+    </footer>
+    
+    <script src={% static 'js/preview-script.js' %}></script>
+</body>
+</html>
